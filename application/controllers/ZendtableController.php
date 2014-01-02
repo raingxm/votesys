@@ -139,9 +139,41 @@ class ZendtableController extends BaseController
 		print_r($res);
 		print "共有".count($res)."个系";
 	 	print "</pre>";
+	 	
+	 	echo "<h1>查询计算机系和外语系的学生信息</h1>";
+	 	$res = $db->query("select * from student where sdept in ('外语系','计算机系')")->fetchAll();
+	 	
+	 	print "<pre>";
+	 	print_r($res);
+	 	print "共有".count($res)."个系";
+	 	print "</pre>";
+	 	
+	 	
+	 	echo "<h1>显示各个系的学生的平均年龄</h1>";
+	 	$res = $db->query("select sdept,avg(sage) from student group by sdept")->fetchAll();
+	 	 
+	 	print "<pre>";
+	 	print_r($res);
+	 	print "</pre>";
+	 	
+	 	echo "<h1>显示人数大于3的系的名称</h1>";
+	 	$res = $db->query("select sdept from student group by sdept having 
+	 			count(sdept)>1")->fetchAll();
+	 	
+	 	print "<pre>";
+	 	print_r($res);
+	 	print "</pre>";
+	 	
+	 	echo "<h1>查询女生大于1的系的名称</h1>";
+	 	$res = $db->query("select count(*) girls,sdept from student
+	 			where ssex='F' group by sdept having girls>1")->fetchAll();
+	 	 
+	 	print "<pre>";
+	 	print_r($res);
+	 	
+	 	print "</pre>";
 		exit();
 		
-    	
     	$this->render('show');
     }
 
