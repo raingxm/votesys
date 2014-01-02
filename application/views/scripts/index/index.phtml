@@ -1,0 +1,10 @@
+<img src='/images/logo.jpg' />
+<h1>请你投票</h1>
+<table width='500px' >
+<tr bgcolor='silver'><td>名称</td><td>描述</td><td>投票数</td><td>投票</td></tr>
+<?php foreach ($this->items as $item){?>
+<tr><td><?=$item['name'] ?></td><td><?=$item['description'] ?></td>
+<td><?=$item['vote_count'] ?></td>
+<td><a href='/vote/vote?itemid=<?=$item['id']?>'>投票</a></td></tr>
+<?php }?>
+</table>
