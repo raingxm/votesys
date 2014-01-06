@@ -187,9 +187,22 @@ class ZendtableController extends BaseController
 	 	print "</pre>";
 	 	
 	 	echo "<h1>查询选修11号课程的最高分和最低分</h1>";
-	 	$res = $db->query("select max(grade),min(grade) from studcourse 
-	 			where cid='11'")->fetchAll();
-	 	 
+	 	//$res = $db->query("select max(grade),min(grade) from studcourse 
+	 	//		where cid='11'")->fetchAll();
+	 	
+	 	//如果上面的这个语句，我们使用参数绑定，则可以这么写				
+	 	//1.写法
+// 	 	$sql = $db->quoteInto("select max(grade),min(grade) from 
+// 	 			studcourse where cid=?", 11);
+// 	 	$res = $db->query($sql)->fetchAll();
+	 	//2.写法
+	 	$res = $db->query("select max(grade),min(grade) from 
+	 			studcourse where cid=:cid AND grade>:grade",
+	 			array(
+	 				'cid'=>11,
+	 				'grade'=>60		
+	 			))->fetchAll();
+	 	
 	 	print "<pre>";
 	 	print_r($res);
 	 	print "</pre>";
@@ -211,6 +224,14 @@ class ZendtableController extends BaseController
 	 	print "<pre>";
 	 	print_r($res);
 	 	print "</pre>";
+	 	
+	 	echo "<h1>分页显示</h1>";
+	 	$res = $db->query("select * from student limit 0,2")->fetchAll();
+	 	
+	 	print "<pre>";
+	 	print_r($res);
+	 	print "</pre>";
+	 	
 	 	
 		exit();
 		
