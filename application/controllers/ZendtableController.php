@@ -170,8 +170,48 @@ class ZendtableController extends BaseController
 	 	 
 	 	print "<pre>";
 	 	print_r($res);
-	 	
 	 	print "</pre>";
+	 	
+	 	echo "<h1>查询计算机系有多少人</h1>";
+	 	$res = $db->query("select count(*) num from student where sdept='计算机系'")->fetchAll();
+	 	
+	 	print "<pre>";
+	 	print_r($res);
+	 	print "</pre>";
+	 	
+	 	echo "<h1>查询总学分</h1>";
+	 	$res = $db->query("select sum(grade) from studcourse")->fetchAll();
+	 	 
+	 	print "<pre>";
+	 	print_r($res);
+	 	print "</pre>";
+	 	
+	 	echo "<h1>查询选修11号课程的最高分和最低分</h1>";
+	 	$res = $db->query("select max(grade),min(grade) from studcourse 
+	 			where cid='11'")->fetchAll();
+	 	 
+	 	print "<pre>";
+	 	print_r($res);
+	 	print "</pre>";
+	 	
+	 	echo "<h1>显示各科考试不及格的学生姓名，科目和分数</h1>";
+	 	$res = $db->query("select student.sname,course.cname,studcourse.grade from course,student,studcourse where 
+	 			studcourse.sid=student.sid AND studcourse.cid=course.cid AND 
+	 			studcourse.grade<60")->fetchAll();
+	 	
+	 	print "<pre>";
+	 	print_r($res);
+	 	print "</pre>";
+	 	
+	 	echo "<h1>计算各个科目不及格的学生数量</h1>";
+	 	$res = $db->query("select count(*),course.cname from course,studcourse 
+	 			where studcourse.grade<60 AND course.cid=studcourse.cid 
+	 			group by studcourse.cid")->fetchAll();
+	 	 
+	 	print "<pre>";
+	 	print_r($res);
+	 	print "</pre>";
+	 	
 		exit();
 		
     	$this->render('show');
